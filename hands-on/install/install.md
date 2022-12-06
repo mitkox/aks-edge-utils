@@ -26,6 +26,8 @@ In summary, the lab includes the following exercises:
 
 In this lab, we will use Azure virtual machine to do a single machince setup and deployment.
 
+#### Step 1: Create a Azure virtual machine with WIndows 11 Pro installed.  
+  
 1. Sign in to Azure  
 Sign in to Azure portal at: https://portal.azure.com.
 
@@ -47,19 +49,24 @@ Sign in to Azure portal at: https://portal.azure.com.
 
     Select **Review + Create** button at the bottom of the page to create virtual machine.
 
-4. Connect to the virtual machine  
-Once the virtual machine is created, go to the **Overview** page, select **Connect** then **RDP** to connect into the virtual machine.
+#### STEP 2: Connect into the Windows 11 Pro virtual machine  
+1. Once the virtual machine is created, go to the **Overview** page, select **Connect** then **RDP** to download the RDP file to your local machine.
+2. Double click the downloaded RDP file to connect into the virtual machine.
 
-5. Enable Hyper-V features for Windows
+#### STEP 3: Enable Hyper-V features for Windows
 
-    Open a PowerShell console as Administrator, run following command:  
+1. Open a PowerShell console as Administrator, run following command:  
     ```bash
     Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
     ```
 
-    Then you can check if Hyper-V is enabled using following command:
+2. check if Hyper-V is enabled using following command:
     ```bash
     Get-WindowsOptionalFeature -Online -FeatureName *hyper*
     ```
-    
+
+#### STEP 4: Install K8S or K3S in Windows 11 Pro
+  
+  
+  
 ### Exercise 2: Implment single machine deployment (owner: Shailendra)
