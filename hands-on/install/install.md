@@ -79,23 +79,31 @@ $jsonObj = $jsonString | ConvertFrom-Json
 $jsonObj.EndUser.AcceptEula = $true
 $jsonObj.EndUser.AcceptOptionalTelemetry = $true
 $jsonObj.LinuxVm.CpuCount = 4
-$jsonObj.LinuxVm.MemoryInMB = 4096
-$jsonObj.Network.ServiceIpRangeSize = 10
+$jsonObj.LinuxVm.MemoryInMB = 8192
+$jsonObj.Network.ServiceIpRangeSize = 40
 
 New-AksEdgeDeployment -JsonConfigString ($jsonObj | ConvertTo-Json)
  ```
 
+<<<<<<< HEAD
   ![RDP](./imgs/az-vm-single.jpg)
 
 Confirm that the deployment was successful by running:
+=======
+Confirm that the deployment was successful the Mariner VM is listed with hcsdiag and the pods are running by running:
+>>>>>>> 079d79f237e1f6f77ba4a15dd7a345b23bb36a92
 
 ```bash
+hcsdiag.exe list 
 kubectl get nodes -o wide
 kubectl get pods -A -o wide
  ```
+<<<<<<< HEAD
 
 ![RDP](./imgs/az-vm-nodes.jpg) 
 
 PS: Multi-node AKS on Edge on Windows will not work on Azure because it will not allow to create Hyper-V external virtual switch due to the limit of Azure network backbone, 
 but we can create external swithch on Physical PC's Hyper-V, then it's possible to create a VM on the same Hyper-V host to communicate with the mariner VM via that external 
 switch with the local ip in the pysical pc's local network. 
+=======
+>>>>>>> 079d79f237e1f6f77ba4a15dd7a345b23bb36a92
