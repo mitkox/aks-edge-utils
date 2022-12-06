@@ -23,3 +23,10 @@ In summary, the lab includes the following exercises:
 ## Lab Instructions
 
 ### Excercise 1: Setup your machine and install AKS Edge Essentials
+
+
+
+
+
+
+## Execise 2: Implment single machine deployment
