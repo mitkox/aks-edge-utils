@@ -90,10 +90,8 @@ New-AksEdgeDeployment -JsonConfigString ($jsonObj | ConvertTo-Json)
 Confirm that the deployment was successful by running:
 =======
 Confirm that the deployment was successful the Mariner VM is listed with hcsdiag and the pods are running by running:
->>>>>>> 079d79f237e1f6f77ba4a15dd7a345b23bb36a92
 
-```bash
-hcsdiag.exe list 
+```bash 
 kubectl get nodes -o wide
 kubectl get pods -A -o wide
  ```
