@@ -73,7 +73,7 @@ Sign in to Azure portal at: https://portal.azure.com.
 
 You can run the New-AksEdgeDeployment cmdlet to deploy a single-machine AKS Edge cluster with a single Linux control-plane node, however we need to pass ServiceIpRangeSize = 10, which is not a default option. On single machine clusters, if you deployed your Kubernetes cluster without specifying a -ServiceIPRangeSize, you will not have allocated IPs for your workload services and you won't have an external IP address. Hence we will use the JSON object and pass it as a string:
 
-
+```bash
 $jsonString = New-AksEdgeConfig -outFile .\mydeployconfig.json
 $jsonObj = $jsonString | ConvertFrom-Json 
 $jsonObj.EndUser.AcceptEula = $true
@@ -83,9 +83,11 @@ $jsonObj.LinuxVm.MemoryInMB = 4096
 $jsonObj.Network.ServiceIpRangeSize = 10
 
 New-AksEdgeDeployment -JsonConfigString ($jsonObj | ConvertTo-Json)
-
+ ```
 
 Confirm that the deployment was successful by running:
 
+```bash
 kubectl get nodes -o wide
 kubectl get pods -A -o wide
+ ```
