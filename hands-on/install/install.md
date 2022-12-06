@@ -29,4 +29,4 @@ In summary, the lab includes the following exercises:
 
 
 
-## Execise 2: Implment single machine deployment
+### Execise 2: Implment single machine deployment
