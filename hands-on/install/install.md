@@ -24,9 +24,42 @@ In summary, the lab includes the following exercises:
 
 ### Exercise 1: Setup your machine and install AKS Edge Essentials (ower: Guomin)
 
+In this lab, we will use Azure virtual machine to do a single machince setup and deployment.
 
+1. Sign in to Azure  
+Sign in to Azure portal at: https://portal.azure.com.
 
+2. In Azure portal, click **Create a resource**, select **Create** in the **Virtual machine** to open the **Create a virtual machine** page
 
+3. Create the VM with below settings  
 
+    ![Azure VM details](./imgs/az-vm-details.jpg)
 
+* **Resource group**: your resource group name, ex: aks-edge-ee-lab-< your name >
+* **Virtual machine name**: your vm name, ex: aks-edge-ee-< your name >
+* **Region**: your Azure region.
+* **Image**: Use the **Windows 11 Pro, version 22H2 - Gen2**
+* **Size**: Use the **Stardard D4ds_v5 - 4vcpus, 16GB memory**  
+
+    And allow inbound rules for RDP connection as below
+
+    ![RDP](./imgs/az-vm-rdp.jpg)
+
+    Select **Review + Create** button at the bottom of the page to create virtual machine.
+
+4. Connect to the virtual machine  
+Once the virtual machine is created, go to the **Overview** page, select **Connect** then **RDP** to connect into the virtual machine.
+
+5. Enable Hyper-V features for Windows
+
+    Open a PowerShell console as Administrator, run following command:  
+    ```bash
+    Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
+    ```
+
+    Then you can check if Hyper-V is enabled using following command:
+    ```bash
+    Get-WindowsOptionalFeature -Online -FeatureName *hyper*
+    ```
+    
 ### Exercise 2: Implment single machine deployment (owner: Shailendra)
