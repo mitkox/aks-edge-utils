@@ -71,7 +71,7 @@ Sign in to Azure portal at: https://portal.azure.com.
   
 ## Execise 2: Implment single machine deployment
 
-You can run the New-AksEdgeDeployment cmdlet to deploy a single-machine AKS Edge cluster with a single Linux control-plane node, however we need to pass ServiceIpRangeSize = 10, which is not a default option. On single machine clusters, if you deployed your Kubernetes cluster without specifying a -ServiceIPRangeSize, you will not have allocated IPs for your workload services and you won't have an external IP address. Hence we will use the JSON object and pass it as a string:
+You can run the New-AksEdgeDeployment cmdlet to deploy a single-machine AKS Edge cluster with a single Linux control-plane node, however we need to pass ServiceIpRangeSize = 10, which is not a default option. On single machine cluster, if you deployed your Kubernetes cluster without specifying a -ServiceIPRangeSize, you will not have allocated IPs for your workload services and you won't have an external IP address. Hence we will use the JSON object and pass it as a string:
 
 ```bash
 $jsonString = New-AksEdgeConfig -outFile .\mydeployconfig.json
@@ -85,9 +85,17 @@ $jsonObj.Network.ServiceIpRangeSize = 10
 New-AksEdgeDeployment -JsonConfigString ($jsonObj | ConvertTo-Json)
  ```
 
+  ![RDP](./imgs/az-vm-single.jpg)
+
 Confirm that the deployment was successful by running:
 
 ```bash
 kubectl get nodes -o wide
 kubectl get pods -A -o wide
  ```
+
+![RDP](./imgs/az-vm-nodes.jpg) 
+
+PS: Multi-node AKS on Edge on Windows will not work on Azure because it will not allow to create Hyper-V external virtual switch due to the limit of Azure network backbone, 
+but we can create external swithch on Physical PC's Hyper-V, then it's possible to create a VM on the same Hyper-V host to communicate with the mariner VM via that external 
+switch with the local ip in the pysical pc's local network. 
