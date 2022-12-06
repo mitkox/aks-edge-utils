@@ -85,9 +85,10 @@ $jsonObj.Network.ServiceIpRangeSize = 40
 New-AksEdgeDeployment -JsonConfigString ($jsonObj | ConvertTo-Json)
  ```
 
-Confirm that the deployment was successful by running:
+Confirm that the deployment was successful the Mariner VM is listed with hcsdiag and the pods are running by running:
 
 ```bash
+hcsdiag.exe list 
 kubectl get nodes -o wide
 kubectl get pods -A -o wide
  ```
