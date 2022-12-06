@@ -95,7 +95,6 @@ Confirm that the deployment was successful the Mariner VM is listed with hcsdiag
 kubectl get nodes -o wide
 kubectl get pods -A -o wide
  ```
-<<<<<<< HEAD
 
 ![RDP](./imgs/az-vm-nodes.jpg) 
 
