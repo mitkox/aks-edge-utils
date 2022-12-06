@@ -19,3 +19,7 @@ In summary, the lab includes the following exercises:
 | CPU       | Two logical processors, clock speed at least 1.8 GHz |
 | Disk space        | At least 14 GB free |
 | Host OS        | Windows 10/11 IoT Enterprise/Enterprise/Pro and Windows Server 2019, 2022 |
+
+## Lab Instructions
+
+### Excercise 1: Setup your machine and install AKS Edge Essentials
