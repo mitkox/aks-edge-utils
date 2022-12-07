@@ -66,8 +66,39 @@ Sign in to Azure portal at: https://portal.azure.com.
     ```
 
 #### STEP 4: Install K8S or K3S in Windows 11 Pro
-  
-  
+AKS Edge Essentials can be deployed on either a single machine or on multiple machines to form a cluster. For both cases it must install AKS on each of the machines using the installer showed [HERE](https://review.learn.microsoft.com/en-us/azure/aks/hybrid/aks-edge-howto-setup-machine?branch=release-aks-lite#download-the-installer) to install K8S or K3S as its Kubernetes distribution, but for the same cluster you can only install the same Kubernetes distribution(k8s or k3s) and can't mixed.  
+
+In this lab, we will use the K8S as Kubernetes distribution but you can deside if you want K3S, the installation steps is similar.
+
+1. Download K8S installer  
+    Downlad K8S installer from this [link](https://aka.ms/aks-edge/k8s-msi).
+
+2. Install K8S  
+    Double-click the downloaded **AksEdge-K8s-0.7.22335.1024.msi** to start installation.  
+
+3. Verify the installation
+
+    Running below command in Powershell to list the AksEdge module: 
+    ```bash
+    Get-Command -Module AksEdge
+    ```
+
+    and below command to show the AksEdge version
+    ```bash
+    (Get-Module AksEdge -ListAvailable).Version
+    ```
+Now you are already setup your machine as Linux node. if you also want to add Windows node support to the machine please take below **OPTIONAL** steps:
+
+1. Download the Windows node files from this [Link](https://aka.ms/aks-edge/windows-node-zip) and extract to a folder  
+2. Open Powershell as Administrator and navigate to above folder that contains the Windows node files.
+3. Running below command to start install
+    ```bash
+    msiexec.exe /i AksEdge-k8s-0.7.22335.1024..msi ADDLOCAL=CoreFeature,WindowsNodeFeature
+    ```
+4. Now you are ready to do Linux&Windows node mixed deployment
+
+
+Please **NOTE** once again, you must do above steps in each machine in your cluster to setup your machines befor making Aks Edge deployment in the next lab sections. 
   
 ## Execise 2: Implment single machine deployment
 
