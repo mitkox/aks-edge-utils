@@ -87,7 +87,9 @@ In this lab, we will use the K8S as Kubernetes distribution but you can deside i
     ```bash
     (Get-Module AksEdge -ListAvailable).Version
     ```
-Now you are already setup your machine as Linux node. if you also want to add Windows node support to the machine please take below **OPTIONAL** steps:
+Now you are already setup your machine as Linux node. 
+
+**OPTIONAL**: If you also want to add Windows node support to the machine please take below steps:
 
 1. Download the Windows node files from this [Link](https://aka.ms/aks-edge/windows-node-zip) and extract to a folder  
 2. Open Powershell as Administrator and navigate to above folder that contains the Windows node files.
@@ -96,7 +98,6 @@ Now you are already setup your machine as Linux node. if you also want to add Wi
     msiexec.exe /i AksEdge-k8s-0.7.22335.1024..msi ADDLOCAL=CoreFeature,WindowsNodeFeature
     ```
 4. Now you are ready to do Linux&Windows node mixed deployment
-
 
 Please **NOTE** once again, you must do above steps in each machine in your cluster to setup your machines befor making Aks Edge deployment in the next lab sections. 
   
