@@ -43,7 +43,7 @@ Sign in to Azure portal at: https://portal.azure.com.
 * **Image**: Use the **Windows 11 Pro, version 22H2 - Gen2**
 * **Size**: Use the **Stardard D4ds_v5 - 4vcpus, 16GB memory**  
 
-    And allow inbound rules for RDP connection as below
+* **Inbound port**: Allow inbound port rules for RDP connection as below
 
     ![RDP](./imgs/az-vm-rdp.jpg)
 
@@ -78,7 +78,7 @@ In this lab, we will use the K8S as Kubernetes distribution but you can deside i
 
 3. Verify the installation
 
-    Running below command in Powershell to list the AksEdge module: 
+    Run below command in Powershell to list the AksEdge module: 
     ```bash
     Get-Command -Module AksEdge
     ```
@@ -89,11 +89,11 @@ In this lab, we will use the K8S as Kubernetes distribution but you can deside i
     ```
 Now you are already setup your machine as Linux node. 
 
-**OPTIONAL**: If you also want to add Windows node support to the machine please take below steps:
+**OPTIONAL**: If you also want to add Windows node support to the machine please take below additional steps:
 
 1. Download the Windows node files from this [Link](https://aka.ms/aks-edge/windows-node-zip) and extract to a folder  
 2. Open Powershell as Administrator and navigate to above folder that contains the Windows node files.
-3. Running below command to start install
+3. Run below command to start install
     ```bash
     msiexec.exe /i AksEdge-k8s-0.7.22335.1024.msi ADDLOCAL=CoreFeature,WindowsNodeFeature
     ```
