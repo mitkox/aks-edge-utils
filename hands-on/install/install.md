@@ -95,9 +95,9 @@ Now you are already setup your machine as Linux node.
 2. Open Powershell as Administrator and navigate to above folder that contains the Windows node files.
 3. Running below command to start install
     ```bash
-    msiexec.exe /i AksEdge-k8s-0.7.22335.1024..msi ADDLOCAL=CoreFeature,WindowsNodeFeature
+    msiexec.exe /i AksEdge-k8s-0.7.22335.1024.msi ADDLOCAL=CoreFeature,WindowsNodeFeature
     ```
-4. Now you are ready to do Linux&Windows node mixed deployment
+4. Now you are ready to do **Linux & Windows** node mixed deployment
 
 Please **NOTE** once again, you must do above steps in each machine in your cluster to setup your machines befor making Aks Edge deployment in the next lab sections. 
   
