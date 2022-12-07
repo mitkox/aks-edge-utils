@@ -26,7 +26,7 @@ In summary, the lab includes the following exercises:
 
 In this lab, we will use Azure virtual machine to do a single machince setup and deployment.
 
-#### Step 1: Create a Azure virtual machine with WIndows 11 Pro installed.  
+#### Step 1: Create an Azure virtual machine with WIndows 11 Pro installed.  
   
 1. Sign in to Azure  
 Sign in to Azure portal at: https://portal.azure.com.
@@ -66,7 +66,7 @@ Sign in to Azure portal at: https://portal.azure.com.
     ```
 
 #### STEP 4: Install K8S or K3S in Windows 11 Pro
-AKS Edge Essentials can be deployed on either a single machine or on multiple machines to form a cluster. For both cases it must install AKS on each of the machines using the installer showed [HERE](https://review.learn.microsoft.com/en-us/azure/aks/hybrid/aks-edge-howto-setup-machine?branch=release-aks-lite#download-the-installer) to install K8S or K3S as its Kubernetes distribution, but for the same cluster you can only install the same Kubernetes distribution(k8s or k3s) and can't mixed.  
+AKS Edge Essentials can be deployed on either a single machine or on multiple machines forming a cluster. For both cases it must install AKS on each of the machines using the installer showed [HERE](https://review.learn.microsoft.com/en-us/azure/aks/hybrid/aks-edge-howto-setup-machine?branch=release-aks-lite#download-the-installer) to install K8S or K3S as its Kubernetes distribution, but for the same cluster you can only install the same Kubernetes distribution(k8s or k3s) and can't mixed.  
 
 In this lab, we will use the K8S as Kubernetes distribution but you can deside if you want K3S, the installation steps is similar.
 
