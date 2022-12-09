@@ -90,7 +90,7 @@ function Install-AideAzCli {
         Installs Azure CLI and required extensions
 
     .DESCRIPTION
-        Checks if Azure CLI is installed (az) and installs the latest version of Azure CLI from https://aka.ms/installazurecliwindows.
+        Checks if Azure CLI is installed (az) and installs the latest version of Azure CLI from "https://aka.ms/installazurecliwindows". 
         This also checks and installs the following extensions
         "connectedmachine", "connectedk8s", "customlocation", "k8s-extension"
 
@@ -355,11 +355,12 @@ function Install-AideArcServer {
         Checks and installs connected machine agent.
 
     .DESCRIPTION
-        This command tests if the connected machine agent is installed and installs using script from https://aka.ms/azcmagent-windows.
+        This command tests if the connected machine agent is installed and installs using script from "https://aka.ms/azcmagent-windows".
         This also sets up for auto update via Microsoft Update.
 
     .OUTPUTS
-        None
+        Boolean
+        True when the install is successful
 
     .EXAMPLE
         Install-AideArcServer
@@ -367,24 +368,38 @@ function Install-AideArcServer {
     if (Test-Path -Path $azcmagentexe -PathType Leaf) {
         Write-Host "> ConnectedMachineAgent is already installed" -ForegroundColor Green
         & $azcmagentexe version
-        return
+        return $true
     }
     Write-Host "> Installing ConnectedMachineAgent..."
     Push-Location $env:TEMP
-    # Download the installation package
-    Invoke-WebRequest -Uri "https://aka.ms/azcmagent-windows" -TimeoutSec 30 -OutFile "$env:TEMP\install_windows_azcmagent.ps1"
-    # Install the hybrid agent
-    & "$env:TEMP\install_windows_azcmagent.ps1"
-    if ($LASTEXITCODE -ne 0) {
-        Write-Host "Error: Failed to install the ConnectedMachineAgent agent : $LASTEXITCODE" -ForegroundColor Red
-    } else {
-        Write-Host "Setting up auto update via Microsoft Update"
-        $ServiceManager = (New-Object -com "Microsoft.Update.ServiceManager")
-        $ServiceID = "7971f918-a847-4430-9279-4a52d1efe18d"
-        $ServiceManager.AddService2($ServiceId, 7, "") | Out-Null
+    try {
+        # Download the installation package
+        Invoke-WebRequest -Uri "https://aka.ms/azcmagent-windows" -TimeoutSec 30 -OutFile "$env:TEMP\install_windows_azcmagent.ps1"
+        # Install the hybrid agent
+        & "$env:TEMP\install_windows_azcmagent.ps1"
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "Error: Failed to install the ConnectedMachineAgent agent : $LASTEXITCODE" -ForegroundColor Red
+        } else {
+            Write-Host "Setting up auto update via Microsoft Update"
+            $ServiceManager = (New-Object -com "Microsoft.Update.ServiceManager")
+            $ServiceID = "7971f918-a847-4430-9279-4a52d1efe18d"
+            $ServiceManager.AddService2($ServiceId, 7, "") | Out-Null
+        }
+        Remove-Item .\AzureConnectedMachineAgent.msi
+        if (Test-Path -Path $azcmagentexe -PathType Leaf) {
+            Write-Host "> ConnectedMachineAgent is installed successfully" -ForegroundColor Green
+            & $azcmagentexe version
+            $retval = $true
+        } else { 
+            Write-Host "Error: Install failed." -ForegroundColor Red 
+            $retval = $false
+        }
+    } catch {
+        Write-Host "Error: Install failed." -ForegroundColor Red
+        $retval = $false
     }
-    Remove-Item .\AzureConnectedMachineAgent.msi
     Pop-Location
+    return $retval
 }
 
 function Test-AideArcServer {
@@ -470,7 +485,11 @@ function Connect-AideArcServer {
 
     #>
     if (!(Test-AideArcServer)) {
-        Install-AideArcServer
+        if (!(Test-Path -Path $azcmagentexe -PathType Leaf)) {
+            $retval = Install-AideArcServer
+            if (!$retval) { return $retval }
+        }
+
     }
     # Check if the machine is already connected
     $agentstatus = (& $azcmagentexe show)
@@ -490,11 +509,11 @@ function Connect-AideArcServer {
             "--service-principal-id", "$($creds.Username)",
             "--service-principal-secret", "$($creds.Password)"
         )
+        $tags = @("--tags","SKU=AksEdgeEssentials")
         if (Test-AideArcKubernetes) {
             $clustername = Get-AideArcClusterName
-            $tags = @("--tags","AKSEE=$clustername")
+            $tags += @("--tags","AKSEE=$clustername")
         }
-        $tags = @("--tags","SKU=AksEdgeEssentials")
         $connectargs += $tags
         $hostSettings = Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings' | Select-Object ProxyServer, ProxyEnable
         if ($hostSettings.ProxyEnable) {
@@ -536,7 +555,7 @@ function Disconnect-AideArcServer {
     #check and unregister extensions
     Remove-AideArcServerExtension
     # disconnect
-    Write-Host "ConnectedMachineAgent state is connected. Disonnecting now..."
+    Write-Host "ConnectedMachineAgent state is connected. Disconnecting now..."
     # Get creds
     $creds = Get-AideArcAzureCreds
     if ($creds) {
@@ -632,7 +651,7 @@ function New-AideArcServerExtension {
         "commandToExecute":"powershell.exe -ExecutionPolicy Unrestricted -File filename.ps1 "
     }
 '@
-
+    $arciotMachineName = hostname
     $cmebaseargs = @(
         "--machine-name", "$($arciotMachineName)",
         "--name", "CustomScriptExtension",
@@ -658,6 +677,7 @@ function Remove-AideArcServerExtension {
         return
     }
     $aicfg = Get-AideArcUserConfig
+    $arciotMachineName = hostname
     $cmeargs = @(
         "--machine-name", "$($arciotMachineName)",
         "--resource-group", "$($aicfg.ResourceGroupName)"
